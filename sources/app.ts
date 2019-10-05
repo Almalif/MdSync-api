@@ -3,7 +3,7 @@ import Koa from "koa";
 import loader from "./loaders";
 import logger from "./loaders/logger";
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const app = new Koa();
 
