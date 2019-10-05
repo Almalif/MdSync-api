@@ -1,0 +1,48 @@
+{
+  "name": "mdsync-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sources/app.ts",
+  "scripts": {
+    "start": "ts-node sources/app.ts",
+    "dev": "nodemon -L",
+    "lint": "eslint -c .eslintrc --ext=.ts ."
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Almalif/MdSync-api/issues"
+  },
+  "homepage": "https://github.com/Almalif/MdSync-api#readme",
+  "dependencies": {
+    "@koa/cors": "^3.0.0",
+    "@types/dotenv": "^6.1.1",
+    "@types/koa": "^2.0.50",
+    "@types/koa-cors": "0.0.0",
+    "@types/koa-router": "^7.0.42",
+    "koa-bodyparser": "^4.2.1",
+    "@types/koa__cors": "^2.2.3",
+    "dotenv": "^8.1.0",
+    "koa": "^2.8.2",
+    "@types/koa-bodyparser": "^4.3.0",
+    "koa-router": "^7.4.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/winston": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^2.3.0",
+    "@typescript-eslint/parser": "^2.3.0",
+    "acorn-jsx": "^4.1.1",
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^2.0.1",
+    "prettier": "^1.18.2",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3"
+  }
+}

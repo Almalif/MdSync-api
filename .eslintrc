@@ -1,0 +1,36 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint",
+        "plugin:prettier/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/typescript",
+        "airbnb"
+      ],
+      "plugins": ["@typescript-eslint", "prettier"],
+      "env": {
+        "node": true,
+        "jest": true
+      },
+      "rules": {
+        "import/order": ["error", {
+          "newlines-between": "always"
+        }],
+        "quotes": ["error", "double", {
+          "avoidEscape": true
+        }],
+        "arrow-parens": "error",
+        "semi": "off",
+        "@typescript-eslint/semi": ["error"]
+      },
+      "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".ts"]
+          }
+        }
+      },
+      "parser": "@typescript-eslint/parser"
+    }
