@@ -6,12 +6,19 @@
   "scripts": {
     "start": "ts-node sources/app.ts",
     "dev": "nodemon -L",
-    "lint": "eslint -c .eslintrc --ext=.ts ."
+    "lint": "eslint -c .eslintrc --ext=.ts .",
+    "test": "jest --passWithNoTests"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Almalif/MdSync-api/issues"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "homepage": "https://github.com/Almalif/MdSync-api#readme",
   "dependencies": {
@@ -41,6 +48,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^2.0.1",
+    "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.3"
