@@ -2,7 +2,6 @@ import Koa from "koa";
 import bodyParser from "koa-bodyparser";
 import cors from "@koa/cors";
 
-import config from "../config";
 import Router from "../api";
 
 import logger from "./logger";
@@ -18,7 +17,7 @@ export default (app: Koa): void => {
 
   // Load API routes
   // app.use(Router);
-  const router = Router(config.api.prefix);
+  const router = Router();
 
   app.use(router.routes()).use(router.allowedMethods());
 
