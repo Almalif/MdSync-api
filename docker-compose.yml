@@ -1,0 +1,22 @@
+version: "3"
+services:
+  app:
+    container_name: mdsync-api
+    restart: always
+    build: ./
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+  mongo:
+    container_name: mdsync-db
+    image: mongo
+    ports:
+      - "27017:27017"
+    env_file: .env
+    volumes:
+      - ./.db/create_user.sh:/docker-entrypoint-initdb.d/create_user.sh
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
