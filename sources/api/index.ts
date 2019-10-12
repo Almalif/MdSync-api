@@ -2,9 +2,8 @@ import Router from "koa-router";
 
 import user from "./routes/user";
 
-export default (apiPrefix: string): Router => {
+export default (): Router => {
   const app = new Router();
-  app.prefix(apiPrefix);
 
   user(app);
 
