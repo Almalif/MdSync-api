@@ -1,12 +1,12 @@
-import Router from "koa-router";
+import createRouter from "koa-joi-router";
 
-const router = new Router();
+const router = createRouter();
 
-export default (app: Router): Router => {
+export default (app: createRouter.Router): createRouter.Router => {
   router.get("/", (ctx) => {
     ctx.body = "Users route";
   });
 
-  app.use("/users", router.routes());
+  app.use("/users", router.middleware());
   return app;
 };

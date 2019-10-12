@@ -19,7 +19,7 @@ export default (app: Koa): void => {
   // app.use(Router);
   const router = Router();
 
-  app.use(router.routes()).use(router.allowedMethods());
+  app.use(router.middleware());
 
   // error handlers
   app.use(async (ctx, next) => {
