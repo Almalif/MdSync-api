@@ -1,6 +1,6 @@
 import Koa from "koa";
 
-import config from "./config";
+import loadConfig from "./config";
 import loader from "./loaders";
 import logger from "./loaders/logger";
 
@@ -8,9 +8,9 @@ const port = process.env.PORT || 3000;
 
 const app = new Koa();
 
-config();
+const config = loadConfig();
 
-loader(app);
+loader(app, config);
 
 app.listen(port, () => {
   logger.info(`server is running on port ${port}`);
