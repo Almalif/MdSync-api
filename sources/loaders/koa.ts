@@ -15,6 +15,15 @@ export default (app: Koa): void => {
   // Middleware that transforms the raw string of req.body into json
   app.use(bodyParser());
 
+  app.use(async (ctx, next) => {
+    try {
+      await next();
+    } catch (err) {
+      ctx.status = err.status || 500;
+      ctx.body = err.message;
+    }
+  });
+
   // Load API routes
   // app.use(Router);
   const router = Router();
