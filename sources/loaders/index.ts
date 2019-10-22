@@ -1,11 +1,11 @@
 import Koa from "koa";
 
-import { getEnvVarOrThrow } from "../utils/getEnvVar";
+import { Config } from "../config";
 
 import koaLoader from "./koa";
 import databaseLoader from "./database";
 
-export default (app: Koa): void => {
-  databaseLoader(getEnvVarOrThrow("DATABASE_URL"));
+export default (app: Koa, config: Config): void => {
+  databaseLoader(config.DATABASE_URL);
   koaLoader(app);
 };

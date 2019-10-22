@@ -1,9 +1,9 @@
-import Router from "koa-router";
+import createRouter from "koa-joi-router";
 
 import user from "./routes/user";
 
-export default (): Router => {
-  const app = new Router();
+export default (): createRouter.Router => {
+  const app = createRouter();
 
   user(app);
 
