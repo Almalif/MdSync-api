@@ -4,12 +4,6 @@ import { User } from "../interfaces/User";
 
 const UserModel = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-      index: true,
-    },
-
     email: {
       type: String,
       lowercase: true,
@@ -19,11 +13,6 @@ const UserModel = new mongoose.Schema(
     },
 
     password: {
-      type: String,
-      required: true,
-    },
-
-    salt: {
       type: String,
       required: true,
     },
