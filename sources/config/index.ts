@@ -4,7 +4,7 @@ import { getEnvVarOrThrow } from "../utils/getEnvVar";
 
 export interface Config {
   NODE_ENV: string;
-  DATABASE_URL: string;
+  MONGODB_URI: string;
 }
 
 export default (): Config => {
@@ -17,6 +17,6 @@ export default (): Config => {
   // Set the NODE_ENV to 'development' by default
   return {
     NODE_ENV: process.env.NODE_ENV || "development",
-    DATABASE_URL: getEnvVarOrThrow("DATABASE_URL"),
+    MONGODB_URI: getEnvVarOrThrow("MONGODB_URI"),
   };
 };
