@@ -9,7 +9,7 @@ services:
     links:
       - mongo
     environment:
-      DATABASE_URL: mongodb://almalif:secret@mongo:27017/mdsync_db?authSource=mdsync_db
+      MONGODB_URI: mongodb://almalif:secret@mongo:27017/mdsync_db?authSource=mdsync_db
   mongo:
     container_name: mdsync-db
     image: mongo

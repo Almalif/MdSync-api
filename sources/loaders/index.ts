@@ -6,6 +6,6 @@ import koaLoader from "./koa";
 import databaseLoader from "./database";
 
 export default (app: Koa, config: Config): void => {
-  databaseLoader(config.DATABASE_URL);
+  databaseLoader(config.MONGODB_URI);
   koaLoader(app);
 };
