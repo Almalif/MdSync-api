@@ -6,6 +6,11 @@ import logger from "./loaders/logger";
 
 const port = process.env.PORT || 3000;
 
+if (!process.env.SERCRET_KEY_JWT) {
+  logger.error("SERCRET_KEY_JWT is missing in env parameters");
+  process.exit(84);
+}
+
 const app = new Koa();
 
 const config = loadConfig();
