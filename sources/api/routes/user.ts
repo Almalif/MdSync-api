@@ -3,12 +3,13 @@ import jwt from "jsonwebtoken";
 
 import UserService from "../../services/userService";
 import UserView from "../views/User";
+import { Config } from "../../config";
 
 const { Joi } = createRouter;
 
 const router = createRouter();
 
-export default (app: createRouter.Router): createRouter.Router => {
+export default (app: createRouter.Router, config: Config): createRouter.Router => {
   router.get("/", (ctx) => {
     ctx.body = "Users route";
   });
@@ -39,7 +40,7 @@ export default (app: createRouter.Router): createRouter.Router => {
       if (connected) {
         ctx.status = 201;
         ctx.body = UserView.formatToken(
-          jwt.sign({ email: ctx.request.body.email }, process.env.SECRET_KEY_JWT as string, { expiresIn: "7d" }),
+          jwt.sign({ email: ctx.request.body.email }, config.SECRET_KEY_JWT as string, { expiresIn: "7d" }),
         );
       } else {
         ctx.status = 401;

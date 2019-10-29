@@ -5,6 +5,7 @@ import { getEnvVarOrThrow } from "../utils/getEnvVar";
 export interface Config {
   NODE_ENV: string;
   MONGODB_URI: string;
+  SECRET_KEY_JWT: string;
 }
 
 export default (): Config => {
@@ -18,5 +19,6 @@ export default (): Config => {
   return {
     NODE_ENV: process.env.NODE_ENV || "development",
     MONGODB_URI: getEnvVarOrThrow("MONGODB_URI"),
+    SECRET_KEY_JWT: getEnvVarOrThrow("SECRET_KEY_JWT"),
   };
 };
