@@ -11,4 +11,9 @@ export default class UserService {
     const createdUser = new UserModel({ email: userInput.email, password });
     return createdUser.save();
   }
+
+  public static async login(userInput: UserInputDTO): Promise<boolean> {
+    const response = await UserModel.findOne({ email: userInput.email }, "password");
+    return Cipher.validatePassword((response && response.password) || "", userInput.password);
+  }
 }
