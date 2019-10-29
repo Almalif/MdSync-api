@@ -39,7 +39,7 @@ export default (app: createRouter.Router): createRouter.Router => {
       if (connected) {
         ctx.status = 201;
         ctx.body = UserView.formatToken(
-          jwt.sign({ email: ctx.request.body.email }, process.env.SERCRET_KEY_JWT as string, { expiresIn: "7d" }),
+          jwt.sign({ email: ctx.request.body.email }, process.env.SECRET_KEY_JWT as string, { expiresIn: "7d" }),
         );
       } else {
         ctx.status = 401;

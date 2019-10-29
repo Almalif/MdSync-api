@@ -13,7 +13,7 @@ export default class UserService {
   }
 
   public static async login(userInput: UserInputDTO): Promise<boolean> {
-    const response = await UserModel.find({ email: userInput.email }, "password");
-    return Cipher.validatePassword(response[0].password, userInput.password);
+    const response = await UserModel.findOne({ email: userInput.email }, "password");
+    return Cipher.validatePassword((response && response.password) || "", userInput.password);
   }
 }
