@@ -16,8 +16,6 @@ const UserModel = new mongoose.Schema(
       type: String,
       required: true,
     },
-
-    files: [String],
   },
   { timestamps: true },
 );
