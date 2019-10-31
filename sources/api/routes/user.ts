@@ -1,15 +1,18 @@
 import createRouter from "koa-joi-router";
 import jwt from "jsonwebtoken";
+import { Container } from "typedi";
 
 import UserService from "../../services/userService";
 import UserView from "../views/User";
-import { Config } from "../../config";
+import Config from "../../config";
 
 const { Joi } = createRouter;
 
 const router = createRouter();
 
-export default (app: createRouter.Router, config: Config): createRouter.Router => {
+export default (app: createRouter.Router): createRouter.Router => {
+  const config = Container.get(Config).get();
+
   router.get("/", (ctx) => {
     ctx.body = "Users route";
   });
@@ -26,7 +29,7 @@ export default (app: createRouter.Router, config: Config): createRouter.Router =
           .max(100)
           .min(8),
       },
-      type: "json",
+      type: "form",
       output: {
         201: {
           body: {

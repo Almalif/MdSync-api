@@ -3,11 +3,10 @@ import bodyParser from "koa-bodyparser";
 import cors from "@koa/cors";
 
 import Router from "../api";
-import { Config } from "../config";
 
 import logger from "./logger";
 
-export default (app: Koa, config: Config): void => {
+export default (app: Koa): void => {
   // The magic package that prevents frontend developers going nuts
   // Alternate description:
   // Enable Cross Origin Resource Sharing to all origins by default
@@ -27,7 +26,7 @@ export default (app: Koa, config: Config): void => {
 
   // Load API routes
   // app.use(Router);
-  const router = Router(config);
+  const router = Router();
 
   app.use(router.middleware());
 
