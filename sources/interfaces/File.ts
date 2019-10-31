@@ -1,5 +1,5 @@
 export interface File {
-  _id: string;
+  id: string;
   name: string;
   content: string;
 }
