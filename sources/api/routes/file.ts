@@ -3,7 +3,6 @@ import createRouter from "koa-joi-router";
 import IsLogged from "../middlewares/IsLogged";
 import FileService from "../../services/fileService";
 import { FileInputDTO } from "../../interfaces/File";
-import logger from "../../loaders/logger";
 
 const { Joi } = createRouter;
 
@@ -31,11 +30,14 @@ export default (app: createRouter.Router): createRouter.Router => {
       },
     },
     handler: async (ctx) => {
-      const file = await FileService.findFileFromId(ctx.request.params.file);
+      const fileId = ctx.request.params.file;
+
+      const file = await FileService.findFileFromId(fileId);
       if (!file) {
         ctx.status = 404;
-        throw new Error(`File with id ${ctx.request.params.file} not found`);
+        throw new Error(`File with id ${fileId} not found`);
       }
+
       ctx.status = 200;
       ctx.body = {
         id: file.id,
@@ -51,7 +53,6 @@ export default (app: createRouter.Router): createRouter.Router => {
     validate: {
       body: {
         name: Joi.string()
-          .lowercase()
           .max(100)
           .min(1),
       },
@@ -65,12 +66,43 @@ export default (app: createRouter.Router): createRouter.Router => {
       },
     },
     handler: async (ctx) => {
-      logger.info(ctx.request.body);
       const createdFile = await FileService.createFile(ctx.request.body as FileInputDTO);
+
       ctx.status = 201;
       ctx.body = {
         id: createdFile.id,
       };
+    },
+  });
+
+  router.route({
+    method: "put",
+    path: "/:file",
+    validate: {
+      body: {
+        name: Joi.string()
+          .max(100)
+          .min(1),
+        content: Joi.string(),
+      },
+      type: "form",
+      output: {
+        200: {
+          body: Joi.string(),
+        },
+      },
+    },
+    handler: async (ctx) => {
+      const fileId = ctx.request.params.file;
+
+      const updatedFile = await FileService.updateFile(fileId, ctx.request.body as FileInputDTO);
+      if (!updatedFile) {
+        ctx.status = 404;
+        throw new Error(`File with id ${fileId} not found`);
+      }
+
+      ctx.status = 200;
+      ctx.body = "Updated successfully";
     },
   });
 
