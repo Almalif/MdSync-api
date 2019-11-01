@@ -6,4 +6,5 @@ export interface File {
 
 export interface FileInputDTO {
   name: string;
+  content: string;
 }
