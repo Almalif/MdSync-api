@@ -1,10 +1,7 @@
-import { User } from "./User";
-
 export interface File {
-  _id: string;
+  id: string;
   name: string;
   content: string;
-  owners: User[];
 }
 
 export interface FileInputDTO {

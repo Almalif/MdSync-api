@@ -1,11 +1,14 @@
 import Koa from "koa";
+import { Container } from "typedi";
 
-import { Config } from "../config";
+import Config from "../config";
 
-import koaLoader from "./koa";
 import databaseLoader from "./database";
+import koaLoader from "./koa";
 
-export default (app: Koa, config: Config): void => {
+export default (app: Koa): void => {
+  const config = Container.get(Config).get();
+
   databaseLoader(config.MONGODB_URI);
-  koaLoader(app, config);
+  koaLoader(app);
 };

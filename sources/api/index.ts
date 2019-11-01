@@ -1,16 +1,17 @@
 import createRouter from "koa-joi-router";
 
-import { Config } from "../config";
-
 import user from "./routes/user";
+import file from "./routes/file";
 
-export default (config: Config): createRouter.Router => {
+export default (): createRouter.Router => {
   const app = createRouter();
-
-  user(app, config);
 
   app.get("/", (ctx) => {
     ctx.body = "MdSync API";
   });
+
+  user(app);
+  file(app);
+
   return app;
 };

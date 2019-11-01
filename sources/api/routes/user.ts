@@ -1,15 +1,17 @@
 import createRouter from "koa-joi-router";
 import jwt from "jsonwebtoken";
+import { Container } from "typedi";
 
 import UserService from "../../services/userService";
-import UserView from "../views/User";
-import { Config } from "../../config";
+import Config from "../../config";
 
 const { Joi } = createRouter;
 
 const router = createRouter();
 
-export default (app: createRouter.Router, config: Config): createRouter.Router => {
+export default (app: createRouter.Router): createRouter.Router => {
+  const config = Container.get(Config).get();
+
   router.get("/", (ctx) => {
     ctx.body = "Users route";
   });
@@ -26,7 +28,7 @@ export default (app: createRouter.Router, config: Config): createRouter.Router =
           .max(100)
           .min(8),
       },
-      type: "json",
+      type: "form",
       output: {
         201: {
           body: {
@@ -39,9 +41,9 @@ export default (app: createRouter.Router, config: Config): createRouter.Router =
       const connected = await UserService.login(ctx.request.body);
       if (connected) {
         ctx.status = 201;
-        ctx.body = UserView.formatToken(
-          jwt.sign({ email: ctx.request.body.email }, config.SECRET_KEY_JWT as string, { expiresIn: "7d" }),
-        );
+        ctx.body = {
+          token: jwt.sign({ email: ctx.request.body.email }, config.SECRET_KEY_JWT as string, { expiresIn: "7d" }),
+        };
       } else {
         ctx.status = 401;
       }
@@ -72,7 +74,9 @@ export default (app: createRouter.Router, config: Config): createRouter.Router =
     handler: async (ctx) => {
       const user = await UserService.register(ctx.request.body);
       ctx.status = 201;
-      ctx.body = UserView.formatUser(user);
+      ctx.body = {
+        email: user.email,
+      };
     },
   });
 
