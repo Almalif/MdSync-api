@@ -40,7 +40,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-joi-router": "^6.0.0",
     "koa-jwt": "^3.6.0",
-    "mongoose": "^5.7.3",
+    "mongoose": "^5.7.5",
     "nodemon": "^1.19.3",
     "reflect-metadata": "^0.1.13",
     "saslprep": "^1.0.3",
