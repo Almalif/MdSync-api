@@ -28,8 +28,6 @@ export default (app: Koa): void => {
   // app.use(Router);
   const router = Router();
 
-  app.use(router.middleware());
-
   // error handlers
   app.use(async (ctx, next) => {
     try {
@@ -40,6 +38,8 @@ export default (app: Koa): void => {
       ctx.app.emit("error", err, ctx);
     }
   });
+
+  app.use(router.middleware());
 
   app.on("error", (err) => {
     logger.error(err.message);

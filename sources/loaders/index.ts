@@ -5,10 +5,12 @@ import Config from "../config";
 
 import databaseLoader from "./database";
 import koaLoader from "./koa";
+import socketio from "./socketio";
 
 export default (app: Koa): void => {
   const config = Container.get(Config).get();
 
   databaseLoader(config.MONGODB_URI);
   koaLoader(app);
+  socketio(app);
 };
