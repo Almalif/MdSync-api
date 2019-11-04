@@ -1,21 +1,25 @@
-import { Server } from "http";
-
-import socketIO from "socket.io";
+import Koa from "koa";
 
 import logger from "./logger";
 
-export default (httpServer: Server): void => {
-  const io = socketIO(httpServer);
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const IO = require("koa-socket-2");
 
-  io.on("connection", (socket: socketIO.Socket) => {
-    logger.info("a user is connected");
+export default (app: Koa): void => {
+  const io = new IO();
+
+  io.attach(app);
+
+  io.on("connection", (socket: SocketIO.Socket) => {
+    logger.info("Connected client on port %s.");
 
     socket.on("join", (roomId: string) => {
       socket.join(roomId);
     });
 
-    socket.on("update", (roomId: string, text: string) => {
-      io.to(roomId).emit("update", text);
+    socket.on("update", (roomId: string, content: string) => {
+      logger.info(`[server](message): ${content}`);
+      socket.to(roomId).emit("update", content);
     });
 
     socket.on("disconnect", () => {
