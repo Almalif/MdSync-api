@@ -11,7 +11,7 @@ export default (app: Koa): void => {
   io.attach(app);
 
   io.on("connection", (socket: SocketIO.Socket) => {
-    logger.info("Connected client on port %s.");
+    logger.info("Connected client on port");
 
     socket.on("join", (roomId: string) => {
       socket.join(roomId);
