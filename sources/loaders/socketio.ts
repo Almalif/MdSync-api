@@ -1,28 +1,25 @@
-// import socketIo from "socket.io";
-import Koa from "koa";
+import { Server } from "http";
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const IO = require("koa-socket-2");
+import socketIO from "socket.io";
 
-export default (app: Koa) => {
-  const io = new IO();
+import logger from "./logger";
 
-  io.attach(app);
+export default (httpServer: Server): void => {
+  const io = socketIO(httpServer);
 
-  io.on("connection", (socket: any) => {
-    console.log("Connected client on port %s.");
-    socket.on("join", (data: any) => {
-      if (data.filename) {
-        console.log("post");
-      }
+  io.on("connection", (socket: socketIO.Socket) => {
+    logger.info("a user is connected");
+
+    socket.on("join", (roomId: string) => {
+      socket.join(roomId);
     });
-    socket.on("update", (m: any) => {
-      console.log("[server](message): %s", JSON.parse(m));
-      socket.emit("update", m);
+
+    socket.on("update", (roomId: string, text: string) => {
+      io.to(roomId).emit("update", text);
     });
 
     socket.on("disconnect", () => {
-      console.log("Client disconnected");
+      logger.info("Client disconnected");
     });
   });
 };
