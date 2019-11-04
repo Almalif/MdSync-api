@@ -1,5 +1,3 @@
-import Http from "http";
-
 import Koa from "koa";
 import { Container } from "typedi";
 
@@ -14,8 +12,5 @@ export default (app: Koa): void => {
 
   databaseLoader(config.MONGODB_URI);
   koaLoader(app);
-
-  const httpServer = Http.createServer(app.callback());
-
-  socketio(httpServer);
+  socketio(app);
 };
