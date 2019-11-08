@@ -31,19 +31,23 @@ export default (app: createRouter.Router): createRouter.Router => {
     },
     handler: async (ctx) => {
       const fileId = ctx.request.params.file;
+      try {
+        const file = await FileService.findFileFromId(fileId);
+        if (!file) {
+          ctx.status = 404;
+          throw new Error("Unable to find file");
+        }
 
-      const file = await FileService.findFileFromId(fileId);
-      if (!file) {
+        ctx.status = 200;
+        ctx.body = {
+          id: file.id,
+          name: file.name,
+          content: file.content,
+        };
+      } catch (e) {
         ctx.status = 404;
-        throw new Error(`File with id ${fileId} not found`);
+        throw new Error("Unable to find file");
       }
-
-      ctx.status = 200;
-      ctx.body = {
-        id: file.id,
-        name: file.name,
-        content: file.content,
-      };
     },
   });
 
@@ -66,12 +70,17 @@ export default (app: createRouter.Router): createRouter.Router => {
       },
     },
     handler: async (ctx) => {
-      const createdFile = await FileService.createFile(ctx.request.body as FileInputDTO);
+      try {
+        const createdFile = await FileService.createFile(ctx.request.body as FileInputDTO);
 
-      ctx.status = 201;
-      ctx.body = {
-        id: createdFile.id,
-      };
+        ctx.status = 201;
+        ctx.body = {
+          id: createdFile.id,
+        };
+      } catch (e) {
+        ctx.status = 400;
+        throw new Error("An error occured while creating the file");
+      }
     },
   });
 
@@ -93,16 +102,21 @@ export default (app: createRouter.Router): createRouter.Router => {
       },
     },
     handler: async (ctx) => {
-      const fileId = ctx.request.params.file;
+      try {
+        const fileId = ctx.request.params.file;
 
-      const updatedFile = await FileService.updateFile(fileId, ctx.request.body as FileInputDTO);
-      if (!updatedFile) {
+        const updatedFile = await FileService.updateFile(fileId, ctx.request.body as FileInputDTO);
+        if (!updatedFile) {
+          ctx.status = 404;
+          throw new Error("Unable to find file");
+        }
+
+        ctx.status = 200;
+        ctx.body = "Updated successfully";
+      } catch (e) {
         ctx.status = 404;
-        throw new Error(`File with id ${fileId} not found`);
+        throw new Error("Unable to find file");
       }
-
-      ctx.status = 200;
-      ctx.body = "Updated successfully";
     },
   });
 
