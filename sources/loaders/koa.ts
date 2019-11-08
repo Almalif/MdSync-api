@@ -5,6 +5,7 @@ import cors from "@koa/cors";
 import Router from "../api";
 
 import logger from "./logger";
+import internationalization from "./internationalization";
 
 export default (app: Koa): void => {
   // The magic package that prevents frontend developers going nuts
@@ -15,14 +16,7 @@ export default (app: Koa): void => {
   // Middleware that transforms the raw string of req.body into json
   app.use(bodyParser());
 
-  app.use(async (ctx, next) => {
-    try {
-      await next();
-    } catch (err) {
-      ctx.status = err.status || 500;
-      ctx.body = err.message;
-    }
-  });
+  internationalization(app);
 
   // Load API routes
   // app.use(Router);
@@ -33,15 +27,12 @@ export default (app: Koa): void => {
     try {
       await next();
     } catch (err) {
+      logger.info("ERROR");
       ctx.status = err.status || 500;
-      ctx.body = err.message;
-      ctx.app.emit("error", err, ctx);
+      logger.info(ctx.t);
+      ctx.body = ctx.t(err.message);
     }
   });
 
   app.use(router.middleware());
-
-  app.on("error", (err) => {
-    logger.error(err.message);
-  });
 };

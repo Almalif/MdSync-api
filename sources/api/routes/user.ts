@@ -46,6 +46,7 @@ export default (app: createRouter.Router): createRouter.Router => {
         };
       } else {
         ctx.status = 401;
+        throw new Error("Unable to connect");
       }
     },
   });
@@ -72,11 +73,16 @@ export default (app: createRouter.Router): createRouter.Router => {
       },
     },
     handler: async (ctx) => {
-      const user = await UserService.register(ctx.request.body);
-      ctx.status = 201;
-      ctx.body = {
-        email: user.email,
-      };
+      try {
+        const user = await UserService.register(ctx.request.body);
+        ctx.status = 201;
+        ctx.body = {
+          email: user.email,
+        };
+      } catch (e) {
+        ctx.status = 400;
+        throw new Error("Unable to create user");
+      }
     },
   });
 

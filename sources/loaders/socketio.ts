@@ -10,7 +10,8 @@ export default (app: Koa): void => {
 
   io.attach(app);
 
-  io.on("connection", (socket: SocketIO.Socket) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  io.on("connection", (socket: any) => {
     logger.info("Connected client on port");
 
     socket.on("join", (roomId: string) => {
@@ -18,7 +19,6 @@ export default (app: Koa): void => {
     });
 
     socket.on("update", (roomId: string, content: string) => {
-      logger.info(`[server](message): ${content}`);
       socket.to(roomId).emit("update", content);
     });
 
