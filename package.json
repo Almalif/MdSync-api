@@ -48,7 +48,7 @@
     "nodemon": "^1.19.3",
     "reflect-metadata": "^0.1.13",
     "saslprep": "^1.0.3",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "ts-node": "^8.4.1",
     "typedi": "^0.8.0",
     "typescript": "^3.6.3",
